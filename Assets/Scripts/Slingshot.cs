@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
+using UnityEngine.UI;
+using TMPro;
 
 
 [System.Serializable]
@@ -23,17 +25,26 @@ public class Slingshot : MonoBehaviour {
     private GameObject launchPoint;
     private GameObject projectile;
     private GameObject sling;
+    private Image missilePreview;
+    private TextMeshProUGUI missileAmmoTxt;
 
     private bool aimingMode;
     private Vector3 launchPos;
+
+    public static event EventHandler RanOutOfAmmo;
 
     private void Awake()
     {
         aimingMode = false;
         launchPoint = GameObject.Find("LaunchPoint");
         sling = GameObject.Find("Sling");
+        missilePreview = GameObject.Find("MissilePreview").GetComponent<Image>();
+        missileAmmoTxt = GameObject.Find("MissileAmmoTxt").GetComponent<TextMeshProUGUI>();
         launchPoint.SetActive(false);
         launchPos = launchPoint.transform.position;
+
+        // missile Preview in GUI
+        missilePreview.sprite = ammo[activeWeapon].missile.GetComponent<SpriteRenderer>().sprite;
 
     }
 
@@ -68,6 +79,8 @@ public class Slingshot : MonoBehaviour {
 
     private void Update()
     {
+        missileAmmoTxt.text = ammo[activeWeapon].ammo.ToString();
+        missilePreview.sprite = ammo[activeWeapon].missile.GetComponent<SpriteRenderer>().sprite;
 
         // change Weapon
         if (Input.GetMouseButtonUp(1))
@@ -93,8 +106,6 @@ public class Slingshot : MonoBehaviour {
 
         else
         {
-
-
             // Get the current mouse position in 2D screen coordinates
             Vector3 mousePos = Input.mousePosition;
 
@@ -143,14 +154,13 @@ public class Slingshot : MonoBehaviour {
                     }
                     else
                     {
-                        print("Out of Ammo");
+                        OnOutOfAmmo(this, EventArgs.Empty);
                     }
                     
                 }
             }
 
         }
-
     }
 
     void ChangeWeapon()
@@ -178,5 +188,11 @@ public class Slingshot : MonoBehaviour {
         points[1] = points[0] + deltaSling;
 
         sling.GetComponent<LineRenderer>().SetPositions(points);    // create Sling
+    }
+
+    void OnOutOfAmmo(object source, EventArgs args)
+    {
+        if (RanOutOfAmmo != null)
+            RanOutOfAmmo(this, EventArgs.Empty);
     }
 }

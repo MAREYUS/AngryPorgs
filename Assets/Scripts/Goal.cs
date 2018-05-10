@@ -1,29 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+
 
 public class Goal : MonoBehaviour {
 
+    
 	// A static field visible from anywhere
-	public static bool goalMet = false;
-
-    public delegate void GoalHit();
-    public static event GoalHit GoalHitEvent;
+    
+    public static event EventHandler GoalHit;
 
     
 
-	void OnTriggerEnter2D(Collider2D other) {
+
+    void OnTriggerEnter2D(Collider2D other) {
 		// Check if the hit comes from a projectile
 		if(other.gameObject.tag == "Missile") {
-			goalMet = true;
-            print("Goal Hit");
+            print("Goal Hit (Goal)");
             // Set alpha to higher opacity
             Color c = GetComponent<SpriteRenderer>().material.color;
-            c.a = 1.0f;
+            c = new Color(0f, 1f, 0f, 1f);
             GetComponent<SpriteRenderer>().material.color = c;
             GetComponent<Collider2D>().enabled = false;
 
-            if (GoalHitEvent != null)
-                GoalHitEvent();
+            OnGoalHit();
         }
 	}
+
+    public virtual void OnGoalHit()
+    {
+        if (GoalHit != null)
+            GoalHit(this, EventArgs.Empty);
+    }
+
 }
