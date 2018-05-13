@@ -68,14 +68,10 @@ public class GameManager : MonoBehaviour {
     private void OnEnable()
     {
         SceneManager.sceneLoaded += ResetLevel;
-        Slingshot.RanOutOfAmmo += OnOutOfAmmo;
-        Goal.GoalHit += OnGoalHit;
     }
 
     private void OnDisable()
     {
-        Goal.GoalHit -= OnGoalHit;
-        Slingshot.RanOutOfAmmo -= OnOutOfAmmo;
         SceneManager.sceneLoaded -= ResetLevel;
     }
 
@@ -92,12 +88,12 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    private void OnGoalHit(object source, EventArgs args)
+    public void OnGoalHit()
     {
         goalHitAmount++;
         goalTxt.text = goalHitAmount + "/" + goalAmount;
     }
-   
+
     private void ResetLevel(Scene scene, LoadSceneMode mode)
     {
         print("Reset Level");
@@ -112,7 +108,7 @@ public class GameManager : MonoBehaviour {
         goalTxt.text = goalHitAmount + "/" + goalAmount;
     }
 
-    private void OnOutOfAmmo(object source, EventArgs args)
+    public void OnOutOfAmmo()
     {
         outOfAmmo = true;
     }

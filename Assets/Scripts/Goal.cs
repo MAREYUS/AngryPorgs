@@ -1,18 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.Events;
 
 
 public class Goal : MonoBehaviour {
-
     
-	// A static field visible from anywhere
+    public UnityEvent GoalHitEvent; 
     
-    public static event EventHandler GoalHit;
-
-    
-
-
     void OnTriggerEnter2D(Collider2D other) {
 		// Check if the hit comes from a projectile
 		if(other.gameObject.tag == "Missile") {
@@ -22,15 +17,9 @@ public class Goal : MonoBehaviour {
             c = new Color(0f, 1f, 0f, 1f);
             GetComponent<SpriteRenderer>().material.color = c;
             GetComponent<Collider2D>().enabled = false;
-
-            OnGoalHit();
+            
+            GoalHitEvent.Invoke();
         }
 	}
-
-    public virtual void OnGoalHit()
-    {
-        if (GoalHit != null)
-            GoalHit(this, EventArgs.Empty);
-    }
-
+    
 }

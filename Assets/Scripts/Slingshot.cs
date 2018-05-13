@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 using UnityEngine.UI;
 using TMPro;
@@ -21,6 +22,10 @@ public class Slingshot : MonoBehaviour {
     public float velocityMult = 10.0f;  // Mulitplier for projectile velocity
     public int activeWeapon = 0;
 
+    // Events
+    public UnityEvent SlingshotFiredEvent;
+    public UnityEvent RanOutOfAmmoEvent;
+
     // set dynamically
     private GameObject launchPoint;
     private GameObject projectile;
@@ -30,8 +35,6 @@ public class Slingshot : MonoBehaviour {
 
     private bool aimingMode;
     private Vector3 launchPos;
-
-    public static event EventHandler RanOutOfAmmo;
 
     private void Awake()
     {
@@ -136,6 +139,7 @@ public class Slingshot : MonoBehaviour {
                 // Fire off the projectile with given velocity
                 Vector3 velocity = -mouseDelta * velocityMult;
                 projectile.GetComponent<Missile>().Launch(velocity);
+                SlingshotFiredEvent.Invoke();
 
                 // Set the Followcam's target to our projectile
                 FollowCam.S.poi = projectile;
@@ -154,7 +158,7 @@ public class Slingshot : MonoBehaviour {
                     }
                     else
                     {
-                        OnOutOfAmmo(this, EventArgs.Empty);
+                        RanOutOfAmmoEvent.Invoke();
                     }
                     
                 }
@@ -189,10 +193,5 @@ public class Slingshot : MonoBehaviour {
 
         sling.GetComponent<LineRenderer>().SetPositions(points);    // create Sling
     }
-
-    void OnOutOfAmmo(object source, EventArgs args)
-    {
-        if (RanOutOfAmmo != null)
-            RanOutOfAmmo(this, EventArgs.Empty);
-    }
+    
 }
