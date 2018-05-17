@@ -42,21 +42,20 @@ public class UIManager : MonoBehaviour
 
     public void CalculateStars()
     {
-        print("Score: " + leftAmmo.Value * 100);
-        int starActive = 0;
+        int earnedStars;
 
-        // Calculate stars
+        // Calculate stars based on LevelSettings
         if (leftAmmo >= levelSettings.star3)
-            starActive = 3;
+            earnedStars = 3;
         else if (leftAmmo >= levelSettings.star2)
-            starActive = 2;
+            earnedStars = 2;
         else if (leftAmmo >= levelSettings.star1)
-            starActive = 1;
+            earnedStars = 1;
         else
-            starActive = 0;
+            earnedStars = 0;
 
         // Display Stars
-        for(int i=0; i<starActive; i++)
+        for(int i=0; i<earnedStars; i++)
         {
             stars[i].SetActive(true);
         }

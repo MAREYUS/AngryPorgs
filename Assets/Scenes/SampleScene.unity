@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 34346362}
   - component: {fileID: 34346364}
   - component: {fileID: 34346363}
+  - component: {fileID: 34346365}
   m_Layer: 5
   m_Name: Star2
   m_TagString: Untagged
@@ -338,6 +339,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 34346361}
+--- !u!114 &34346365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 34346361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24fc2ca6e82da51409666036252760be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  strength: 0.3
+  turnOfAfterSeconds: 1
 --- !u!1 &43285590
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +906,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 254525354}
         m_MethodName: UpdateScore
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1202220752}
+        m_MethodName: Wiggle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1958,6 +1984,7 @@ GameObject:
   - component: {fileID: 1202220749}
   - component: {fileID: 1202220751}
   - component: {fileID: 1202220750}
+  - component: {fileID: 1202220752}
   m_Layer: 5
   m_Name: GoalTxt
   m_TagString: Untagged
@@ -2104,6 +2131,20 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1202220748}
+--- !u!114 &1202220752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1202220748}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24fc2ca6e82da51409666036252760be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  strength: 1
+  turnOfAfterSeconds: 1
 --- !u!1 &1214174548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2554,6 +2595,7 @@ GameObject:
   - component: {fileID: 1551155187}
   - component: {fileID: 1551155189}
   - component: {fileID: 1551155188}
+  - component: {fileID: 1551155190}
   m_Layer: 5
   m_Name: Star1
   m_TagString: Untagged
@@ -2612,6 +2654,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1551155186}
+--- !u!114 &1551155190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1551155186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24fc2ca6e82da51409666036252760be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  strength: 0.3
+  turnOfAfterSeconds: 1
 --- !u!1 &1716600476
 GameObject:
   m_ObjectHideFlags: 0
@@ -2622,6 +2678,7 @@ GameObject:
   - component: {fileID: 1716600477}
   - component: {fileID: 1716600479}
   - component: {fileID: 1716600478}
+  - component: {fileID: 1716600480}
   m_Layer: 5
   m_Name: Star3
   m_TagString: Untagged
@@ -2680,6 +2737,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1716600476}
+--- !u!114 &1716600480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1716600476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24fc2ca6e82da51409666036252760be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  strength: 0.3
+  turnOfAfterSeconds: 1
 --- !u!1 &1718618759
 GameObject:
   m_ObjectHideFlags: 0
