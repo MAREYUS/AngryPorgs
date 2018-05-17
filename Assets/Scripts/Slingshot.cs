@@ -21,6 +21,7 @@ public class Slingshot : MonoBehaviour {
     public List<Ammo> ammo;
     public float velocityMult = 10.0f;  // Mulitplier for projectile velocity
     public int activeWeapon = 0;
+    public FloatVariable leftAmmo;
 
     // Events
     public UnityEvent SlingshotFiredEvent;
@@ -38,6 +39,7 @@ public class Slingshot : MonoBehaviour {
 
     private void Awake()
     {
+        leftAmmo.Value = CalculateLeftAmmo();
         aimingMode = false;
         launchPoint = GameObject.Find("LaunchPoint");
         sling = GameObject.Find("Sling");
@@ -82,88 +84,92 @@ public class Slingshot : MonoBehaviour {
 
     private void Update()
     {
+        print(CalculateLeftAmmo());
+
         missileAmmoTxt.text = ammo[activeWeapon].ammo.ToString();
         missilePreview.sprite = ammo[activeWeapon].missile.GetComponent<SpriteRenderer>().sprite;
 
-        // change Weapon
-        if (Input.GetMouseButtonUp(1))
+        if (GameManager.currentGameState == GameManager.GameState.Active)
         {
-            ChangeWeapon();
-        }
-
-        // If the Slingshot is not in aiming mode, don't run this code
-        if (!aimingMode)
-        {
-            sling.SetActive(false); // disable Sling (LineRenderer)
-
-            // if Mouse is clicked while not in aiming mode: set Camera back to Origin
-            if (Input.GetMouseButton(0))
+            // change Weapon
+            if (Input.GetMouseButtonUp(1))
             {
-                FollowCam.S.poi = launchPoint;
+                ChangeWeapon();
             }
 
-            
-
-            return;
-        }
-
-        else
-        {
-            // Get the current mouse position in 2D screen coordinates
-            Vector3 mousePos = Input.mousePosition;
-
-            // Convert the mouse position to 3D world coordinates
-            mousePos.z = -Camera.main.transform.position.z;
-            Vector3 mousePos3D = Camera.main.ScreenToWorldPoint(mousePos);
-
-            // Find the delta from launch position to 3D mouse position
-            Vector3 mouseDelta = mousePos3D - launchPos;
-
-            // Limit mouseDelta to the radius of the Slingshot SphereCollider
-            float maxMagnitude = GetComponent<CircleCollider2D>().radius;
-            mouseDelta = Vector3.ClampMagnitude(mouseDelta, maxMagnitude);
-
-            // Now move the projectile to this new position
-            projectile.transform.position = launchPos + mouseDelta;
-
-            // Create Sling
-            sling.SetActive(true);
-            CreateSling(launchPos, mousePos3D, maxMagnitude);
-
-
-            if (Input.GetMouseButtonUp(0))
+            // If the Slingshot is not in aiming mode, don't run this code
+            if (!aimingMode)
             {
-                // The mouse has been released
-                aimingMode = false;
+                sling.SetActive(false); // disable Sling (LineRenderer)
 
-                // Fire off the projectile with given velocity
-                Vector3 velocity = -mouseDelta * velocityMult;
-                projectile.GetComponent<Missile>().Launch(velocity);
-                SlingshotFiredEvent.Invoke();
-
-                // Set the Followcam's target to our projectile
-                FollowCam.S.poi = projectile;
-
-                // Set the reference to the projectile to null as early as possible
-                projectile = null;
-
-                // remove MissileType from List if all ammo used
-                if(ammo[activeWeapon].ammo == 0)
+                // if Mouse is clicked while not in aiming mode: set Camera back to Origin
+                if (Input.GetMouseButton(0))
                 {
-                    if(ammo.Count > 1)
-                    {
-                        print(ammo.Count);
-                        ammo.RemoveAt(activeWeapon);
-                        activeWeapon = 0;
-                    }
-                    else
-                    {
-                        RanOutOfAmmoEvent.Invoke();
-                    }
-                    
+                    FollowCam.S.poi = launchPoint;
                 }
+
+
+
+                return;
             }
 
+            else
+            {
+                // Get the current mouse position in 2D screen coordinates
+                Vector3 mousePos = Input.mousePosition;
+
+                // Convert the mouse position to 3D world coordinates
+                mousePos.z = -Camera.main.transform.position.z;
+                Vector3 mousePos3D = Camera.main.ScreenToWorldPoint(mousePos);
+
+                // Find the delta from launch position to 3D mouse position
+                Vector3 mouseDelta = mousePos3D - launchPos;
+
+                // Limit mouseDelta to the radius of the Slingshot SphereCollider
+                float maxMagnitude = GetComponent<CircleCollider2D>().radius;
+                mouseDelta = Vector3.ClampMagnitude(mouseDelta, maxMagnitude);
+
+                // Now move the projectile to this new position
+                projectile.transform.position = launchPos + mouseDelta;
+
+                // Create Sling
+                sling.SetActive(true);
+                CreateSling(launchPos, mousePos3D, maxMagnitude);
+
+
+                if (Input.GetMouseButtonUp(0))
+                {
+                    // The mouse has been released
+                    aimingMode = false;
+
+                    // Fire off the projectile with given velocity
+                    Vector3 velocity = -mouseDelta * velocityMult;
+                    projectile.GetComponent<Missile>().Launch(velocity);
+                    SlingshotFiredEvent.Invoke();
+
+                    // Set the Followcam's target to our projectile
+                    FollowCam.S.poi = projectile;
+
+                    // Set the reference to the projectile to null as early as possible
+                    projectile = null;
+
+                    // remove MissileType from List if all ammo used
+                    if (ammo[activeWeapon].ammo == 0)
+                    {
+                        if (ammo.Count > 1)
+                        {
+                            ammo.RemoveAt(activeWeapon);
+                            activeWeapon = 0;
+                        }
+                        else
+                        {
+                            RanOutOfAmmoEvent.Invoke();
+                        }
+
+                    }
+                }
+
+            }
         }
     }
 
@@ -192,6 +198,23 @@ public class Slingshot : MonoBehaviour {
         points[1] = points[0] + deltaSling;
 
         sling.GetComponent<LineRenderer>().SetPositions(points);    // create Sling
+    }
+
+    public int CalculateLeftAmmo()
+    {
+        int leftAmmo = 0;
+
+        foreach(Ammo a in ammo)
+        {
+            leftAmmo += a.ammo;
+        }
+        
+        return leftAmmo;
+    }
+
+    public void SetLeftAmmo()
+    {
+        leftAmmo.Value = CalculateLeftAmmo();
     }
     
 }

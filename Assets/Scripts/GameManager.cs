@@ -5,34 +5,31 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
-
-    private GameObject goalParent;
+    
 
     public enum GameState{
         Active,
-        Won,
-        Lost
+        Inactive
     }
 
-    // UI
-    private GameObject endScreen;
-    private TextMeshProUGUI goalTxt;
+    public FloatVariable goalHitAmount;
+    public ThingRuntimeSet goalAmount;
 
-    private int goalAmount;
-    private int goalHitAmount;
+    public UnityEvent GameWonEvent;
+    public UnityEvent GameLostEvent;
 
     private bool outOfAmmo;
-
-    // Properties
-    public int GoalAmount { get { return goalAmount; } }
-    public int GoalHitAmount { get { return goalHitAmount; } }
+    public static GameState currentGameState;
 
     private void Awake()
     {
+        currentGameState = GameState.Active;
+        goalHitAmount.Value = 0;
         //Check if instance already exists
         if (instance == null)
 
@@ -46,7 +43,7 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
 
         //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         
         
     }
@@ -54,15 +51,18 @@ public class GameManager : MonoBehaviour {
     private void Update()
     {
         // game Won
-        if(goalHitAmount == GoalAmount)
+        if (goalAmount.Items.Count == goalHitAmount.Value)
         {
-            CalculateStars();
             GameWon();
+            GameWonEvent.Invoke();
         }
 
         // Game Lost
-        if (outOfAmmo && Input.GetMouseButton(0)) 
+        if (outOfAmmo && Input.GetMouseButton(0))
+        {
             GameLost();
+            GameLostEvent.Invoke();
+        }
     }
 
     private void OnEnable()
@@ -85,27 +85,16 @@ public class GameManager : MonoBehaviour {
     // load next Level
     public void LoadNextLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if(SceneManager.GetActiveScene().buildIndex +1 < SceneManager.sceneCountInBuildSettings)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-
-    public void OnGoalHit()
-    {
-        goalHitAmount++;
-        goalTxt.text = goalHitAmount + "/" + goalAmount;
-    }
-
+    
     private void ResetLevel(Scene scene, LoadSceneMode mode)
     {
+        currentGameState = GameState.Active;
         print("Reset Level");
         outOfAmmo = false;
-        goalParent = GameObject.Find("Goals");
-        goalAmount = goalParent.transform.childCount;
-        goalHitAmount = 0;
-        endScreen = GameObject.Find("EndScreen");
-        goalTxt = GameObject.Find("GoalTxt").GetComponent<TextMeshProUGUI>();
-
-        endScreen.SetActive(false);
-        goalTxt.text = goalHitAmount + "/" + goalAmount;
+        goalHitAmount.Value = 0;
     }
 
     public void OnOutOfAmmo()
@@ -115,21 +104,18 @@ public class GameManager : MonoBehaviour {
     
     private void GameLost()
     {
-        print("Game lost");
-        endScreen.SetActive(true);
-        GameObject.Find("ResultTxt").GetComponent<TextMeshProUGUI>().text = "YOU LOST";
-        GameObject.Find("NextLevelBtn").SetActive(false);
+        currentGameState = GameState.Inactive;
     }
 
     private void GameWon()
     {
-        print("Game won");
-        endScreen.SetActive(true);
-        GameObject.Find("ResultTxt").GetComponent<TextMeshProUGUI>().text = "YOU WIN";
-        GameObject.Find("NextLevelBtn").SetActive(true);
+        currentGameState = GameState.Inactive;
+    }
+    
+    public void UpdateGoalHitAmount()
+    {
+        goalHitAmount.Value++;
     }
 
-    void CalculateStars()
-    {
-    }
+
 }

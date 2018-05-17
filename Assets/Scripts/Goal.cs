@@ -17,7 +17,7 @@ public class Goal : MonoBehaviour {
             c = new Color(0f, 1f, 0f, 1f);
             GetComponent<SpriteRenderer>().material.color = c;
             GetComponent<Collider2D>().enabled = false;
-            
+           
             GoalHitEvent.Invoke();
         }
 	}
