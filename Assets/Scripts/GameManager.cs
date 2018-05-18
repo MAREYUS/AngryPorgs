@@ -19,11 +19,11 @@ public class GameManager : MonoBehaviour {
 
     public FloatVariable goalHitAmount;
     public ThingRuntimeSet goalAmount;
+    public FloatReference ammoAmount;
 
     public UnityEvent GameWonEvent;
     public UnityEvent GameLostEvent;
-
-    private bool outOfAmmo;
+    
     public static GameState currentGameState;
 
     private void Awake()
@@ -41,9 +41,6 @@ public class GameManager : MonoBehaviour {
 
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
-
-        //Sets this to not be destroyed when reloading scene
-        //DontDestroyOnLoad(gameObject);
         
         
     }
@@ -58,7 +55,7 @@ public class GameManager : MonoBehaviour {
         }
 
         // Game Lost
-        if (outOfAmmo && Input.GetMouseButton(0))
+        if (ammoAmount.Value == 0 && Input.GetMouseButton(0))
         {
             GameLost();
             GameLostEvent.Invoke();
@@ -93,13 +90,7 @@ public class GameManager : MonoBehaviour {
     {
         currentGameState = GameState.Active;
         print("Reset Level");
-        outOfAmmo = false;
         goalHitAmount.Value = 0;
-    }
-
-    public void OnOutOfAmmo()
-    {
-        outOfAmmo = true;
     }
     
     private void GameLost()

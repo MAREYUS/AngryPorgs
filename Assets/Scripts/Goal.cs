@@ -21,5 +21,5 @@ public class Goal : MonoBehaviour {
             GoalHitEvent.Invoke();
         }
 	}
-    
+
 }
