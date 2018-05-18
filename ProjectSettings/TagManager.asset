@@ -43,3 +43,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Environment
+    uniqueID: 1631611287
+    locked: 0
+  - name: Enemies
+    uniqueID: 954132307
+    locked: 0
+  - name: Missiles
+    uniqueID: 796803165
+    locked: 0

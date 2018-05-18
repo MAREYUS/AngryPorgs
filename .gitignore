@@ -9,6 +9,7 @@ Build/
 Assets/AssetStoreTools*
 ExportedObj/...
 .svd
+*.meta
 .userprefs
 .csproj
 .pidb
@@ -25,7 +26,6 @@ ExportedObj/...
 Icon?
 ehthumbs.db
 Thumbs.db
-
 
 
 
