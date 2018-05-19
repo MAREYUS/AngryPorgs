@@ -1294,11 +1294,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4402317782466372, guid: 5889e0bdb3e6c3849a6400bf8a8c3f95, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.27
+      value: -2.88
       objectReference: {fileID: 0}
     - target: {fileID: 4402317782466372, guid: 5889e0bdb3e6c3849a6400bf8a8c3f95, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.5
+      value: -1.07
       objectReference: {fileID: 0}
     - target: {fileID: 4402317782466372, guid: 5889e0bdb3e6c3849a6400bf8a8c3f95, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1327,11 +1327,6 @@ Prefab:
     - target: {fileID: 1767620252150278, guid: 5889e0bdb3e6c3849a6400bf8a8c3f95, type: 2}
       propertyPath: m_Name
       value: TIEFighter (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 50911998726805096, guid: 5889e0bdb3e6c3849a6400bf8a8c3f95,
-        type: 2}
-      propertyPath: m_BodyType
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5889e0bdb3e6c3849a6400bf8a8c3f95, type: 2}
@@ -2637,11 +2632,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4402317782466372, guid: 5889e0bdb3e6c3849a6400bf8a8c3f95, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.75
+      value: 0.68
       objectReference: {fileID: 0}
     - target: {fileID: 4402317782466372, guid: 5889e0bdb3e6c3849a6400bf8a8c3f95, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.1
+      value: 0.38
       objectReference: {fileID: 0}
     - target: {fileID: 4402317782466372, guid: 5889e0bdb3e6c3849a6400bf8a8c3f95, type: 2}
       propertyPath: m_LocalPosition.z

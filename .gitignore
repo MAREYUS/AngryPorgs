@@ -9,7 +9,6 @@ Build/
 Assets/AssetStoreTools*
 ExportedObj/...
 .svd
-*.meta
 .userprefs
 .csproj
 .pidb

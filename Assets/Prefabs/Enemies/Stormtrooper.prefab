@@ -106,6 +106,18 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  maxHP:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 2667e4f4d407bb541930c0b68fd94f4f, type: 2}
+  collisionForceFactor:
+    UseConstant: 1
+    ConstantValue: 1
+    Variable: {fileID: 0}
+  killPlane:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: d3a5db90ed25772449ef9c2e70349cc3, type: 2}
 --- !u!114 &114884670432528170
 MonoBehaviour:
   m_ObjectHideFlags: 1

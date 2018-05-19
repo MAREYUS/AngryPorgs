@@ -8,9 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3c4215a37e8ee44b80922de6f5dce6e, type: 3}
-  m_Name: Level1
+  m_Script: {fileID: 11500000, guid: f0ac4aefe5ce0ff4c9db1a333b690149, type: 3}
+  m_Name: KillPlaneThreshold
   m_EditorClassIdentifier: 
-  star1: 2
-  star2: 3
-  star3: 4
+  DeveloperDescription: Kill Objects below this threshold
+  Value: -30

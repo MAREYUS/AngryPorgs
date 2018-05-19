@@ -16,8 +16,9 @@ public class Thing : MonoBehaviour
         RuntimeSet.Add(this);
     }
 
-    private void OnDisable()
+    private void OnDestroy()    // former OnEnable
     {
         RuntimeSet.Remove(this);
     }
+
 }
