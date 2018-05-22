@@ -52,14 +52,14 @@ public class GameManager : MonoBehaviour {
     private void Update()
     {
         // game Won
-        if (goalAmount.Items.Count == goalHitAmount.Value)
+        if (goalAmount.Items.Count == goalHitAmount.Value && currentGameState == GameState.Active)
         {
             GameWon();
             GameWonEvent.Invoke();
         }
 
         // Game Lost
-        if (ammoAmount.Value == 0 && Input.GetMouseButton(0) && !gameWon)
+        if (ammoAmount.Value == 0 && Input.GetMouseButton(0) && !gameWon && currentGameState == GameState.Active)
         {
             GameLost();
             GameLostEvent.Invoke();
