@@ -26,10 +26,14 @@ public class GameManager : MonoBehaviour {
     
     public static GameState currentGameState;
 
+    private bool gameWon = false;
+
     private void Awake()
     {
         currentGameState = GameState.Active;
         goalHitAmount.Value = 0;
+        gameWon = false;
+
         //Check if instance already exists
         if (instance == null)
 
@@ -55,7 +59,7 @@ public class GameManager : MonoBehaviour {
         }
 
         // Game Lost
-        if (ammoAmount.Value == 0 && Input.GetMouseButton(0))
+        if (ammoAmount.Value == 0 && Input.GetMouseButton(0) && !gameWon)
         {
             GameLost();
             GameLostEvent.Invoke();
@@ -101,6 +105,7 @@ public class GameManager : MonoBehaviour {
     private void GameWon()
     {
         currentGameState = GameState.Inactive;
+        gameWon = true;
     }
     
     public void UpdateGoalHitAmount()
